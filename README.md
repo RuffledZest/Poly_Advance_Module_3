@@ -73,11 +73,11 @@ component main = VibCustomCircuit();
 `npm i`
 
 ### Compile
-`npx hardhat circom` 
+`npx hardhat circom --verbose` 
 This will generate the **out** file with circuit intermediaries and geneate the **MultiplierVerifier.sol** contract
 
 ### Prove and Deploy
-`npx hardhat run scripts/deploy.ts`
+`npx hardhat run scripts/deploy.ts --network zkEVM`
 This script does 4 things  
 1. Deploys the MultiplierVerifier.sol contract
 2. Generates a proof from circuit intermediaries with `generateProof()`
