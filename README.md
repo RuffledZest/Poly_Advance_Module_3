@@ -1,26 +1,73 @@
-# zardkat 🐱
+# Custom zkSnark Circuit Verification with zardkat
 
 A [hardhat-circom](https://github.com/projectsophon/hardhat-circom) template to generate zero-knowledge circuits, proofs, and solidity verifiers
 
-## Quick Start
-Compile the Multiplier2() circuit and verify it against a smart contract verifier
+## Description
+### Quick Start
+Compile the VibCustomCircuit() circuit and verify it against a smart contract verifier
+* Implemented circuit
+![Circuit](https://drive.google.com/uc?export=view&id=1eyO6T2YSWV-WYpRLfRRBc6xMNtRGGhRt)
 
 ```
 pragma circom 2.0.0;
 
-/*This circuit template checks that c is the multiplication of a and b.*/  
+/*This circuit template checks that Q  is the output of the custom circuit img above file of a and b.*/ 
 
-template Multiplier2 () {  
 
-   // Declaration of signals.  
-   signal input a;  
-   signal input b;  
-   signal output c;  
 
-   // Constraints.  
-   c <== a * b;  
+template VibCustomCircuit () {  
+
+   // signal inputs
+
+   signal input A;
+   signal input B;
+
+   // signal from gates
+
+   signal X;
+   signal Y;
+
+   // final signal output
+
+   signal output Q;
+
+   // component gates used to create custom circuit
+
+   component andGate = AND();
+   component notGate = NOT();
+   component orGate = OR();
+
+   // circuit logic
+   andGate.a <== A;
+   andGate.b <== B;
+   X <== andGate.out;
+   notGate.in <== B;
+   Y <== notGate.out;
+   orGate.a <== X;
+   orGate.b <== Y;
+   Q <== orGate.out;  
 }
-component main = Multiplier2();
+template AND() {
+    signal input a;
+    signal input b;
+    signal output out;
+
+    out <== a*b;
+}
+template NOT() {
+    signal input in;
+    signal output out;
+
+    out <== 1 + in - 2*in;
+}
+template OR() {
+    signal input a;
+    signal input b;
+    signal output out;
+
+    out <== a + b - a*b;
+}
+component main = VibCustomCircuit();
 ```
 ### Install
 `npm i`

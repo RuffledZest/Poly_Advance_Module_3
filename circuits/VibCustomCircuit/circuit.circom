@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
 
-/*This circuit template checks that c is the multiplication of a and b.*/  
+/*This circuit template checks that Q  is the output of the custom circuit img in readme file of a and b.*/  
 
 template VibCustomCircuit () {  
 
